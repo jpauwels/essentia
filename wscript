@@ -179,6 +179,7 @@ def configure(ctx):
         # add /usr/local/include as the brew formula for yaml doesn't have
         # the cflags properly set
         #ctx.env.CXXFLAGS += [ '-I/usr/local/include' ]
+        ctx.env.LINKFLAGS += [ '-undefined dynamic_lookup' ]
 
         if ctx.options.ARCH == 'i386':
             ctx.env.CXXFLAGS += ['-arch', 'i386']
