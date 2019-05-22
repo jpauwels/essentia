@@ -177,9 +177,6 @@ def configure(ctx):
         ctx.env.DEFINES += ['GTEST_HAS_TR1_TUPLE=0']
         # for defining static const variables in header
         # ctx.env.CXXFLAGS += [ '-Wno-static-float-init' ]
-        # add /usr/local/include as the brew formula for yaml doesn't have
-        # the cflags properly set
-        #ctx.env.CXXFLAGS += [ '-I/usr/local/include' ]
 
         if ctx.options.ARCH == 'i386':
             ctx.env.CXXFLAGS += ['-arch', 'i386']
@@ -303,6 +300,7 @@ def configure(ctx):
             ctx.env.LINKFLAGS += ['-Wl,-Bsymbolic']
             ctx.env.LDFLAGS += ['-Wl,-Bsymbolic']
 
+    ctx.load('xcode6')
     ctx.recurse('src')
 
 

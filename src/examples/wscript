@@ -152,7 +152,7 @@ def build(ctx):
             if any((len(x.split("/")) > 1 for x in other or [])):
                 includes.append("../..")
 
-            ctx(features='c cxx cxxprogram check_static',
+            ctx.program(features='c cxx cxxprogram check_static',
                 source = ctx.path.ant_glob(' '.join(files)),
                 target = 'essentia_' + prog_name,
                 includes = includes,
