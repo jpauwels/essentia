@@ -88,7 +88,7 @@ void PeakDetection::compute() {
     }
   }
 
-  while(true) {
+  while(i < size-1) {
     // going down
     while (i+1 < size-1 && array[i] >= array[i+1]) {
       i++;
@@ -138,30 +138,12 @@ void PeakDetection::compute() {
     }
 
     // nothing found, start loop again
-    i = j;
-
-    if (i+1 >= size-1) { // check the one just before the last position
-      if (i == size-2 && array[i-1] < array[i] &&
-          array[i+1] < array[i] &&
-          array[i] > _threshold) {
-        Real resultBin = 0.0;
-        Real resultVal = 0.0;
-        if (_interpolate) {
-          interpolate(array[i-1], array[i], array[i+1], j, resultVal, resultBin);
-        }
-        else {
-          resultBin = i;
-          resultVal = array[i];
-        }
-        peaks.push_back(Peak(resultBin*scale, resultVal));
-      }
-      break;
-    }
+    i = ++j;
   }
 
   // check upper boundary here, so peaks are already sorted by position
   Real pos = _maxPos/scale;
-  if (size-2 <pos && pos <= size-1 && array[size-1] > array[size-2]) {
+  if (size-2 < pos && pos <= size-1 && array[size-1] > array[size-2]) {
     if (array[size-1] > _threshold) {
       peaks.push_back(Peak((size-1)*scale, array[size-1]));
     }

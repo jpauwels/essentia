@@ -128,8 +128,7 @@ void TuningFrequency::compute() {
   frame_energy = energy(magnitudes);
 
   // Compute 'frame' maximum histogram value as the tuning of the frame
-  vector<Real>::iterator frameMaxElement = max_element(_histogram.begin(), _histogram.end());
-  int frameIndex = frameMaxElement - _histogram.begin();
+  int frameIndex = argmax(_histogram);
   Real frameTuning = _resolution*frameIndex - 50.0;
 
   // Compute 'global' maximum histogram value, i.e. the sum of all!
