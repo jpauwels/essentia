@@ -52,6 +52,7 @@ void SpectralPeaks::configure() {
                          "minPosition", parameter("minFrequency"),
                          "maxPosition", parameter("maxFrequency"),
                          "threshold", parameter("magnitudeThreshold"),
+                         "allowMinPosition", parameter("allowMinFrequency"),
                          "orderBy", orderBy);
 }
 

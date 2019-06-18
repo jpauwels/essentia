@@ -40,6 +40,7 @@ class PeakDetection : public Algorithm {
   bool _interpolate;
   std::string _orderBy;
   Real _minPeakDistance;
+  bool _allowMinPos;
 
  public:
   PeakDetection() {
@@ -57,6 +58,7 @@ class PeakDetection : public Algorithm {
     declareParameter("orderBy", "the ordering type of the output peaks (ascending by position or descending by value)", "{position,amplitude}", "position");
     declareParameter("interpolate", "boolean flag to enable interpolation", "{true,false}", true);
     declareParameter("minPeakDistance", "minimum distance between consecutive peaks (0 to bypass this feature)", "[0,inf)", 0.0);
+    declareParameter("allowMinPosition", "allow the smallest position greater than the minimum to be a peak", "{true,false}", true);
   }
 
   void configure();

@@ -47,6 +47,7 @@ void TuningFrequencyExtractor::createInnerNetwork() {
 
   _windowing->configure("type", "blackmanharris62");
   _spectralPeaks->configure("orderBy", "frequency",
+                            "allowMinFrequency", false,
                             "magnitudeThreshold", 1e-05,
                             "minFrequency", 40,
                             "maxFrequency", 5000,

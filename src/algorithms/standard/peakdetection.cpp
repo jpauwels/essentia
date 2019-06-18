@@ -46,6 +46,7 @@ void PeakDetection::configure() {
   _interpolate = parameter("interpolate").toBool();
   _orderBy = parameter("orderBy").toLower();
   _minPeakDistance = parameter("minPeakDistance").toReal();
+  _allowMinPos = parameter("allowMinPosition").toBool();
 
   if (_minPos >= _maxPos) {
     throw EssentiaException("PeakDetection: The minimum position has to be less than the maximum position");
@@ -82,7 +83,7 @@ void PeakDetection::compute() {
   int i = std::max(0, (int) ceil(_minPos / scale));
 
   // first check the boundaries:
-  if (i+1 < size && array[i] > array[i+1]) {
+  if (_allowMinPos && i+1 < size && array[i] > array[i+1]) {
     if (array[i] > _threshold) {
       if (i == 0) {
         peaks.push_back(Peak(i*scale, array[i]));
