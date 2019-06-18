@@ -84,7 +84,20 @@ void PeakDetection::compute() {
   // first check the boundaries:
   if (i+1 < size && array[i] > array[i+1]) {
     if (array[i] > _threshold) {
-      peaks.push_back(Peak(i*scale, array[i]));
+      if (i == 0) {
+        peaks.push_back(Peak(i*scale, array[i]));
+      } else if (array[i-1] < array[i]) {
+        if (_interpolate) {
+          Real resultBin = 0.0;
+          Real resultVal = 0.0;
+          interpolate(array[i-1], array[i], array[i+1], i, resultVal, resultBin);
+          if (resultBin * scale >= _minPos) {
+            peaks.push_back(Peak(resultBin*scale, resultVal));
+          }
+        } else {
+          peaks.push_back(Peak(i*scale, array[i]));
+        }
+      }
     }
   }
 
