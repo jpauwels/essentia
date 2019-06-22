@@ -366,8 +366,8 @@ static int temme_ik_series(double v, double x, double *K, double *K1)
     BOOST_ASSERT(fabs(x) <= 2);
     BOOST_ASSERT(fabs(v) <= 0.5f);
 
-    gp = gamma(v + 1) - 1;
-    gm = gamma(-v + 1) - 1;
+    gp = tgamma(v + 1) - 1;
+    gm = tgamma(-v + 1) - 1;
 
     a = log(x / 2);
     b = exp(v * a);

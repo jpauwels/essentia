@@ -248,14 +248,14 @@ if( b > 0 )
 
 h1 = hyp2f0( a, a-b+1, -1.0/x, 1, &err1 );
 
-temp = exp(u) / gamma(b-a);
+temp = exp(u) / tgamma(b-a);
 h1 *= temp;
 err1 *= temp;
 
 h2 = hyp2f0( b-a, 1.0-a, 1.0/x, 2, &err2 );
 
 if( a < 0 )
-	temp = exp(t) / gamma(a);
+	temp = exp(t) / tgamma(a);
 else
 	temp = exp( t - lgam(a) );
 
@@ -272,7 +272,7 @@ acanc = fabs(err1) + fabs(err2);
 
 if( b < 0 )
 	{
-	temp = gamma(b);
+	temp = tgamma(b);
 	asum *= temp;
 	acanc *= fabs(temp);
 	}
