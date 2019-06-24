@@ -49,7 +49,7 @@ void TuningFrequencyExtractor::createInnerNetwork() {
   _spectralPeaks->configure("orderBy", "frequency",
                             "allowMinFrequency", false,
                             "magnitudeThreshold", 1e-05,
-                            "minFrequency", 40,
+                            "minFrequency", 0.01,
                             "maxFrequency", 5000,
                             "maxPeaks", 10000);
 
