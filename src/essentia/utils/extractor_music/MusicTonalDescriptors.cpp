@@ -48,7 +48,7 @@ void MusicTonalDescriptors::createNetworkTuningFrequency(SourceBase& source, Poo
                                      "magnitudeThreshold", 0.00001,
                                      "minFrequency", 0.01,
                                      "maxFrequency", 5000,
-                                     "allowMinFrequency", true,
+                                     "allowMinFrequency", false,
                                      "orderBy", "frequency");
   Algorithm* tuning = factory.create("TuningFrequency");
 
