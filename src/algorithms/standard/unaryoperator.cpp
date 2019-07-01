@@ -46,6 +46,8 @@ UnaryOperator::OpType UnaryOperator::typeFromString(const std::string& name) con
   if (name == "cos") return COS;
   if (name == "sqrt") return SQRT;
   if (name == "square") return SQUARE;
+  if (name == "amp2db") return AMP2DB;
+  if (name == "db2amp") return DB2AMP;
 
   throw EssentiaException("UnaryOperator: Unknown unary operator type: ", name);
 }
@@ -122,6 +124,8 @@ void UnaryOperator::compute() {
     }
 
   case SQUARE: APPLY_FUNCTION(square_func);
+  case AMP2DB: APPLY_FUNCTION(amp2db);
+  case DB2AMP: APPLY_FUNCTION(db2amp);
 
   default:
     throw EssentiaException("UnaryOperator: Unknown unary operator type");

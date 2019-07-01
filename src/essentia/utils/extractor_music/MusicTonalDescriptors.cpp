@@ -42,21 +42,27 @@ void MusicTonalDescriptors::createNetworkTuningFrequency(SourceBase& source, Poo
                                      "type", windowType,
                                      "zeroPadding", zeroPadding);
   Algorithm* spec   = factory.create("Spectrum");
+  Algorithm* dbConverter = factory.create("UnaryOperator",
+                                          "type", "amp2db");
   // TODO: which parameters to select for min/maxFrequency? [20, 3500] for consistency?
   Algorithm* peaks  = factory.create("SpectralPeaks",
                                      "maxPeaks", 10000,
-                                     "magnitudeThreshold", 0.00001,
+                                     "magnitudeThreshold", -100,
                                      "minFrequency", 0.01,
                                      "maxFrequency", 5000,
                                      "allowMinFrequency", false,
                                      "orderBy", "frequency");
+  Algorithm* ampConverter = factory.create("UnaryOperator",
+                                           "type", "db2amp");
   Algorithm* tuning = factory.create("TuningFrequency");
 
   source                            >> fc->input("signal");
   fc->output("frame")               >> w->input("frame");
   w->output("frame")                >> spec->input("frame");
-  spec->output("spectrum")          >> peaks->input("spectrum");
-  peaks->output("magnitudes")       >> tuning->input("magnitudes");
+  spec->output("spectrum")          >> dbConverter->input("array");
+  dbConverter->output("array")      >> peaks->input("spectrum");
+  peaks->output("magnitudes")       >> ampConverter->input("array");
+  ampConverter->output("array")     >> tuning->input("magnitudes");
   peaks->output("frequencies")      >> tuning->input("frequencies");
   tuning->output("tuningFrequency") >> PC(pool, nameSpace + "tuning_frequency");
   tuning->output("tuningCents")     >> NOWHERE;

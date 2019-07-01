@@ -99,6 +99,6 @@ void BinaryOperator::compute() {
     }
   
   default:
-    throw EssentiaException("BinaryOperator: Unknown unary operator type");
+    throw EssentiaException("BinaryOperator: Unknown binary operator type");
   }
 }

@@ -99,6 +99,6 @@ void BinaryOperatorStream::compute() {
     }
   
   default:
-    throw EssentiaException("BinaryOperatorStream: Unknown unary operator type");
+    throw EssentiaException("BinaryOperatorStream: Unknown binary operator type");
   }
 }

@@ -42,7 +42,9 @@ class UnaryOperatorStream : public Algorithm {
     SIN,
     COS,
     SQRT,
-    SQUARE
+    SQUARE,
+    AMP2DB,
+    DB2AMP
   };
 
   OpType typeFromString(const std::string& name) const;
@@ -61,7 +63,7 @@ class UnaryOperatorStream : public Algorithm {
   }
 
   void declareParameters() {
-    declareParameter("type", "the type of the unary operator to apply to input array", "{identity,abs,log10,log,ln,lin2db,db2lin,sin,cos,sqrt,square}", "identity");
+    declareParameter("type", "the type of the unary operator to apply to input array", "{identity,abs,log10,log,ln,lin2db,db2lin,sin,cos,sqrt,square,amp2db,db2amp}", "identity");
     declareParameter("scale", "multiply result by factor", "(-inf,inf)", 1.);
     declareParameter("shift", "shift result by value (add value)", "(-inf,inf)", 0.);   
   }

@@ -48,6 +48,8 @@ UnaryOperatorStream::OpType UnaryOperatorStream::typeFromString(const std::strin
   if (name == "cos") return COS;
   if (name == "sqrt") return SQRT;
   if (name == "square") return SQUARE;
+  if (name == "amp2db") return AMP2DB;
+  if (name == "db2amp") return DB2AMP;
 
   throw EssentiaException("UnaryOperatorStream: Unknown unary operator type: ", name);
 }
@@ -124,6 +126,8 @@ void UnaryOperatorStream::compute() {
     break;
 
   case SQUARE: APPLY_FUNCTION(square_func);
+  case AMP2DB: APPLY_FUNCTION(amp2db);
+  case DB2AMP: APPLY_FUNCTION(db2amp);
 
   default:
     throw EssentiaException("UnaryOperatorStream: Unknown unary operator type");

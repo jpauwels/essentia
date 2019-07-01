@@ -44,14 +44,18 @@ void TuningFrequencyExtractor::createInnerNetwork() {
   _spectrum        = factory.create("Spectrum");
   _tuningFrequency = factory.create("TuningFrequency");
   _windowing       = factory.create("Windowing");
+  _dbConverter     = factory.create("UnaryOperator");
+  _ampConverter    = factory.create("UnaryOperator");
 
   _windowing->configure("type", "blackmanharris62");
   _spectralPeaks->configure("orderBy", "frequency",
                             "allowMinFrequency", false,
-                            "magnitudeThreshold", 1e-05,
+                            "magnitudeThreshold", -100,
                             "minFrequency", 0.01,
                             "maxFrequency", 5000,
                             "maxPeaks", 10000);
+  _dbConverter->configure("type", "amp2db");
+  _ampConverter->configure("type", "db2amp");
 
   declareInput(_signal, "signal", "the input audio signal");
   declareOutput(_tuningFreq, "tuningFrequency", "the computed tuning frequency");
@@ -60,9 +64,11 @@ void TuningFrequencyExtractor::createInnerNetwork() {
 
   _frameCutter->output("frame")            >>  _windowing->input("frame");
   _windowing->output("frame")              >>  _spectrum->input("frame");
-  _spectrum->output("spectrum")            >>  _spectralPeaks->input("spectrum");
+  _spectrum->output("spectrum")            >>  _dbConverter->input("array");
+  _dbConverter->output("array")            >>  _spectralPeaks->input("spectrum");
   _spectralPeaks->output("frequencies")    >>  _tuningFrequency->input("frequencies");
-  _spectralPeaks->output("magnitudes")     >>  _tuningFrequency->input("magnitudes");
+  _spectralPeaks->output("magnitudes")     >>  _ampConverter->input("array");
+  _ampConverter->output("array")           >>  _tuningFrequency->input("magnitudes");
   connect(_tuningFrequency->output("tuningCents"), NOWHERE);
 
   attach(_tuningFrequency->output("tuningFrequency"), _tuningFreq);

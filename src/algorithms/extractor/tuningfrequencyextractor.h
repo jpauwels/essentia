@@ -31,7 +31,7 @@ namespace streaming {
 
 class TuningFrequencyExtractor : public AlgorithmComposite {
  protected:
-  Algorithm* _frameCutter, *_spectralPeaks, *_spectrum, *_tuningFrequency, *_windowing;
+  Algorithm* _frameCutter, *_spectralPeaks, *_spectrum, *_tuningFrequency, *_windowing, *_dbConverter, *_ampConverter;
 
   SinkProxy<Real> _signal;
   SourceProxy<Real> _tuningFreq;
