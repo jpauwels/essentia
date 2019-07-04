@@ -99,10 +99,7 @@ void TuningFrequency::compute() {
 
   // the frame histogram is reset every frame...
   fill(_histogram.begin(), _histogram.end(), (Real) 0.0);
-
-  // the peak energy
-  Real frame_energy = (Real)0.0;
-
+  
   // Compute histogram with arbitrary cents resolution
   for (int i=0; i<(int)magnitudes.size(); i++) {
     if (frequencies[i] <= 0.0) {
@@ -120,26 +117,17 @@ void TuningFrequency::compute() {
     //if (index >= (int)_histogram.size() || index < 0) { // this case will never occur
     //  throw EssentiaException("TuningFrequency: Index smaller or equal to zero.");
     //}
-
-
+    
     _histogram[index] += magnitudes[i];
   }
-
-  frame_energy = energy(magnitudes);
-
+  
+  Real frame_energy = energy(magnitudes);
+  
   // Compute 'frame' maximum histogram value as the tuning of the frame
-  int frameIndex = argmax(_histogram);
-  Real frameTuning = _resolution*frameIndex - 50.0;
-
+  _globalHistogram[argmax(_histogram)] += frame_energy;
+  
   // Compute 'global' maximum histogram value, i.e. the sum of all!
   // this is a bit strange, as we only want the "last" value that is
   // computed.
-  int globalHistogramIndex = (int) ((50.0+frameTuning)/_resolution+0.5);
-
-  if (globalHistogramIndex == (int)_globalHistogram.size()) {
-    globalHistogramIndex = 0;
-  }
-  _globalHistogram[globalHistogramIndex] += frame_energy;
-
   updateOutputs();
 }
