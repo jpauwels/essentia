@@ -194,7 +194,7 @@ void RhythmExtractor::configure() {
   // Configure internal algorithms
   _frameCutter->configure("frameSize", _frameSize,
                           "hopSize", _hopSize,
-                          "silentFrames", "noise",
+                          "silentFrames", "keep",
                           "startFromZero", false);
 
   _windowing->configure("size", _frameSize,
