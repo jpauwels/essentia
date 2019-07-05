@@ -341,7 +341,7 @@ void MusicLowlevelDescriptors::createNetworkLoudness(SourceBase& source, Pool& p
                                  "frameSize", frameSize,
                                  "hopSize", hopSize,
                                  "startFromZero", true,
-                                 "silentFrames", "noise");
+                                 "silentFrames", options.value<string>("average_loudness.silentFrames"));
 
   Algorithm* dy = factory.create("Loudness");
   source                  >> fc->input("signal");
